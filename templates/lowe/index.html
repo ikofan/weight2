@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %} LoWe 北邮MBA跑步俱乐部减重打卡小分队 {% endblock %}
+
+{% block content %}
+    <br><br><br>
+    <h3>当前：第{{ number_of_batch }}期减重</h3>
+    <div class="row">
+    <div class="col-md-4">
+        <ul><h4 class="glyphicon glyphicon-calendar">起止日期</h4>
+            <li>开始日期：{{ s_date }}</li>
+            <li>结束日期：{{ e_date }}</li>
+            <li>持续天数：{{ days }}天</li>
+        </ul>
+    </div>
+        <div class="col-md-4">
+            <ul><h4 class="glyphicon glyphicon-usd">本期押金池</h4>
+            <li>总奖金：{{ bounus }}</li>
+            <li>参与人数：共{{ persons }}人</li>
+        </ul>
+        </div>
+        <div class="col-md-4">
+            <ul><h4 class="glyphicon glyphicon-king">当前王者</h4>
+            <li>第一名：{{ first_one }}</li>
+            <li>第二名：{{ second_one }}</li>
+                <span class="fa-comment">排名按照减重的绝对值计算</span>
+        </ul>
+        </div>
+
+    </div>
+ <hr>
+    <h3>当前减重的进度和状态</h3>
+    <div class="row">
+
+        <div class="col-md-5">
+
+            <p>
+                我是本阶段的进度条 ({{ s_date }}-{{ e_date }})：
+            </p>
+        </div>
+        <div class="col-md-6">
+            <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ progress }};"><span class="sr-only">{{ progress }} Complete</span>
+            </div>
+        </div>
+        </div>
+              <div class="col-md-1">
+                <p>
+                    {{progress}}
+                </p>
+              </div>
+    </div>
+              <div class="row">
+                  <div class="col-md-12">
+                    <p>
+                        鼓励大家没事常打卡，每周一早上至少要打卡一次！
+                    </p>
+                      <p><span style="background: orange"><strong>请大家控制进度，最终结果超过下一目标组奖励减半，实际完成目标如超过目标数据1kg及以上则取消奖励。</strong></span></p>
+
+
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                    <table id="tracker" class="cell-border stripe" style="width: 100%">
+                        <thead>
+                        <tr>
+                            <th class="text-center"><span class="glyphicon glyphicon-user"> 名字</span></th>
+                            <th class="text-center"><span class="glyphicon glyphicon-stats"> 初始体重kg</span></th>
+                            <th class="text-center"><span class="glyphicon glyphicon-arrow-down"> 减重目标kg</span></th>
+                            <th class="text-center"><span class="glyphicon glyphicon-ice-lolly"> 当前体重kg</span></th>
+                            <th class="text-center"><span class="glyphicon glyphicon-ice-lolly-tasted"> 目标体重kg</span></th>
+                            <th class="text-center"><span class="glyphicon glyphicon-scissors"> 已减重kg</span></th>
+                            <th class="text-center"><span class="glyphicon glyphicon-flash"> 完成进度</span></th>
+                        </tr>
+                        </thead>
+                    </table>
+
+                </div>
+              </div>
+
+        <!-- /container -->
+
+
+
+{% endblock %}
+
+{% block javascript %}
+
+      <script>
+    $(document).ready(function () {
+        $('#tracker').DataTable({
+            'searching': false,
+            'paging': false,
+            'aaSorting':[
+              [1,'desc']
+            ],
+            'ajax': '/tracker/', // json的url
+            'columns': [
+                {'data': 'name'},
+                {'data': 's_weight'},
+                {'data': 'target'},
+                {'data': 'c_weight'},
+                {'data': 'p_weight'},
+                {'data': 'losed_weight'},
+                {'data': 'complete_rate',
+                    render:function(data){
+                        var tmp = ((100*data).toFixed(2)).toString();
+                        var num =tmp+"%";
+                        var result="style='width: "+tmp+"%'";
+                        var color="class='progress-bar'";
+                        if(data>=0.9){
+                            color="class='progress-bar'";
+                        }
+                        else if(data>=0.7){
+                            color="class='progress-bar progress-bar-warning'";
+                        }
+                        else {
+                            color="class='progress-bar progress-bar-danger'";
+                        }
+                        return "<div class='col-md-12'>"+
+                            "<div> <small class='pull-right'>"+num+"</small> </div>"+
+                            "<div class='progress progress-small'>"+
+                            "<div id='DXI092-0208_progress-bar'"+result+color+"></div>"+
+                            // "<input value='29%'  readonly='true' style=' text-align-all: left;margin-top: -3px;border:1px;font-size: 5px;width: 25px'>"+
+                            "</div>"+
+
+                            "</div>";
+                    }
+                },
+
+              //  {'data': 'e_date'},
+               // {'data': 'batches'},
+
+            ],
+            'language': {
+                'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Chinese.json' // 以中文显示
+            }
+        })
+    })
+</script>
+
+{% endblock %}

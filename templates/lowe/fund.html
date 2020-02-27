@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %} 第{{ batches }}期押金明细和奖金分配 {% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-md-12">
+    <h3>第{{ batches }}期押金明细和奖金分配</h3>
+    <p>本期参与人数共：{{ number }}人，押金总共：{{ total_fund }}元，明细如下：</p>
+    <div class="table-responsive">
+  <table class="table">
+    <caption>第{{ batches }}期（{{ s_date }}-{{ e_date }}）押金明细</caption>
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>减重目标（kg）</th>
+        <th>应缴押金（元）</th></tr>
+    </thead>
+    <tbody>
+    {% for nm in names %}
+        <tr>
+        <td>{{ nm.name }}</td>
+        <td>{{ nm.target }}</td>
+        <td>{{ nm.fund }}</td></tr>
+      <tr>
+    {% endfor %}
+
+    </tbody>
+  </table>
+</div>
+{% if refund %}
+<div class="table-responsive">
+  <table class="table">
+    <caption>第{{ batches }}期（{{ s_date }}-{{ e_date }}）奖金分配明细</caption>
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>减重目标（kg）</th>
+        <th>应缴押金（元）</th></tr>
+    </thead>
+    <tbody>
+    {% for nm in names %}
+        <tr>
+        <td>{{ nm.name }}</td>
+        <td>{{ nm.target }}</td>
+        <td>{{ nm.fund }}</td></tr>
+      <tr>
+    {% endfor %}
+
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+
+</div>
+
+</div>
+
+
+{% endblock %}

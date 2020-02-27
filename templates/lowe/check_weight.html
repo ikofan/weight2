@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %} 减重打卡 {% endblock %}
+
+{% block content %}
+<div class="row text-center vertical-middle-sm">
+    <h1>WRITE A NEW RECORD</h1>
+</div>
+
+    <div class="row">
+
+    <div class="col-md-12">
+    <div style="padding: 100px 100px 10px;">
+        <form action="{% url 'check' %}" method="post" role="form">
+            {% csrf_token %}
+            <!--span写在不同位置效果不通，写在field上面则标签文字在左边，写在field下则在右边-->
+            {% for field in form %}
+                <div class="form-group-group">
+                    <label for="name"> {{ field.label }}</label>
+                                        {{ field }}
+                </div>
+                <br>
+            {% endfor %}
+            <input type = "submit" value = "Submit" class="btn-primary" style="float: right"/>
+
+        </form>
+    </div>
+    </div>
+
+
+{% endblock %}
+
+
