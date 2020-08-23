@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %} 第{{ batch.batches}}期押金明细和奖金分配公示 {% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-md-12">
+    <h3>第{{ batch.batches }}期押金明细和奖金分配公示</h3>
+    <p>本期参与人数共：{{ number }}人，押金总共：{{ total_fund }}元，公示如下：</p>
+    <div class="table-responsive">
+  <table class="table">
+    <caption>第{{ batch.batches }}期（{{ batch.s_date }}-{{ batch.e_date }}）押金及奖金分配明细</caption>
+    <thead>
+      <tr>
+        <th>姓名</th>
+          <th>初始体重（kg）</th>
+        <th>减重目标（kg）</th>
+        <th>应缴押金（元）</th>
+        <th>权重</th>
+          <th>结束体重（kg）</th>
+          <th>完成状态</th>
+          <th>奖金分配（元）</th>
+          <th>捐北邮跑步俱乐部（元）</th>
+          <th>应发账款（元）</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for nm in lowes %}
+        <tr>
+        <td>{{ nm.name }}</td>
+            <td>{{ nm.s_weight }}</td>
+        <td>{{ nm.target }}</td>
+        <td>{{ nm.fund }}</td>
+        <td>{{ nm.refund_weight }}</td>
+            <td>{{ nm.e_weight }}</td>
+            <td>{{ nm.get_result_display }}</td>
+        <td>{{ nm.refund }}</td>
+            <td>{{ nm.rc_refund }}</td>
+        <td>{{ nm.fund|add:nm.refund }}</td>
+      <tr>
+    {% endfor %}
+
+    </tbody>
+  </table>
+    <h5>备注：</h5>
+        <ul>
+            <li>本期罚金总额：{{ total_refund }}元，其中赞助给北邮跑步俱乐部{{ refund_to_buptrc }}元，用于分配奖金{{ refund_to_finisher }}元。</li>
+            <li>由于计算精度问题，奖金分配可能会有几分钱的误差请知晓！</li>
+            <li>应发账款直接取整，高会计在公示后的三个工作日内尽快发给大家！</li>
+            <li>如对以上结果有疑问或者不同意见，请立刻与作者联系！</li>
+        </ul>
+
+</div>
+
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %} 押金明细和奖金分配 {% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-md-12">
+{#status是用了choices属性，所以在模板里面要写上get_status_display#}
+    <ul>
+        {% for batch in batches %}
+            <li><a href="./{{ batch.id }}">第{{ batch.batches }}期减重 - {{ batch.s_date }}到{{ batch.e_date }} - {{ batch.get_status_display }}</a></li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+</div>
+
+
+{% endblock %}

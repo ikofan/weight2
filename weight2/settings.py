@@ -122,9 +122,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = (  # 自定义静态文件位置
-#     os.path.join(BASE_DIR, "static"),  # 注意不要丢掉这个逗号，因为这是个元祖
-#  )
+STATICFILES_DIRS = (  # 自定义静态文件位置
+    os.path.join(BASE_DIR, "static"),  # 注意不要丢掉这个逗号，因为这是个元祖
+ )
 
 # 执行python manage.py collectstatic需要下面这个
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
